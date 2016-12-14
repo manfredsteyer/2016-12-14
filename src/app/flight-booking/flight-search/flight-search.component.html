@@ -1,0 +1,58 @@
+<h1>Search Flights</h1>
+
+<div class="form-group">
+    <label>From</label>
+    <input [(ngModel)]="from" class="form-control">
+</div>
+
+<div class="form-group">
+    <label>To</label>
+    <input [(ngModel)]="to" class="form-control">
+</div>
+
+<div class="form-group">
+    <button
+            class="btn btn-primary"
+            [disabled]="!from || !to"
+            (click)="search()">Search</button>
+</div>
+
+<div *ngFor="let f of flights" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+
+
+    <flight-card
+            [item]="f"
+            [(selectedItem)]="selectedFlight">
+
+        <input type="button"
+               value="Edit"
+               class="btn btn-default"
+               [routerLink]="['../flight-edit', f.id]" >
+
+    </flight-card>
+
+    <!--
+        <flight-card
+            [item]="f"
+            [selectedItem]="selectedFlight"
+            (selectedItemChange)="selectedFlight = $event">
+        </flight-card>
+    -->
+</div>
+<!--
+<table class="table table-striped">
+
+    <tr *ngFor="let flight of flights" [ngClass]="{ 'active': flight == selectedFlight }">
+        <td>{{flight.id}}</td>
+        <td>{{flight.from | city:'short'}}</td>
+        <td>{{flight.to | city:'long'}}</td>
+        <td>{{flight.date | date:'dd.MM.yyyy HH:mm' }}</td>
+        <td><a (click)="select(flight)">Select</a></td>
+    </tr>
+</table>
+-->
+
+<pre>Warenkorb
+------------------
+{{selectedFlight | json}}
+</pre>
