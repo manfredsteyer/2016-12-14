@@ -1,3 +1,4 @@
+import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { FlightBookingModule } from './flight-booking/flight-booking.module';
 import { PassengerEditComponent } from './flight-booking/passenger-edit/passenger-edit.component';
 import { NgModule } from '@angular/core';
@@ -26,7 +27,8 @@ import {FlightEditComponent} from "./flight-booking/flight-edit/flight-edit.comp
   ],
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    FlightHistoryComponent
   ],
   providers: [
     { provide: BASE_URL, useValue: "http://www.angular.at/api"},

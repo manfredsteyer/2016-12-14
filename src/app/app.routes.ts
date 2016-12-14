@@ -1,3 +1,4 @@
+import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { PassengerEditComponent } from './flight-booking/passenger-edit/passenger-edit.component';
 import {Routes, RouterModule} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
@@ -16,6 +17,11 @@ const APP_ROUTES: Routes = [
     {
         path:'home',
         component:HomeComponent
+    },
+    {
+        path: 'history',
+        component: FlightHistoryComponent,
+        outlet: 'aux'
     },
     {
         path: '**',
