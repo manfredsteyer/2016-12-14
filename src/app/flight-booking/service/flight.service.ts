@@ -1,7 +1,7 @@
 import { OAuthService } from 'angular2-oauth2/oauth-service';
 import {Http, URLSearchParams, Headers} from "@angular/http";
 import {Injectable, Inject} from "@angular/core";
-import {Observable} from "rxjs";
+import {Observable, BehaviorSubject} from "rxjs";
     // Reactive Extensions for JS
 import {Flight} from "../../entities/flight";
 import { BASE_URL } from '../../app.constants';
@@ -10,11 +10,47 @@ import { BASE_URL } from '../../app.constants';
 export class FlightService {
 
     flights: Flight[] = [];
+    flight$ = new BehaviorSubject<Flight[]>([]);
 
     constructor(
         private http: Http,
         private oauthService: OAuthService,
         @Inject(BASE_URL) private baseUrl: string) {
+    }
+
+    delay() {
+
+        // Mutable "klassisch"
+
+        const ONE_MINUTE = 1000 * 60;
+
+        let oldFlights = this.flights;
+        let oldFlight = oldFlights[0];
+        let oldFlightDate = new Date(oldFlight.date);
+
+        let newFlightDate = new Date(oldFlightDate.getTime() + ONE_MINUTE * 15);
+        
+        /*
+        let newFlight = {
+            id: oldFlight.id,
+            from: oldFlight.from,
+            to: oldFlight.to,
+            date: newFlightDate.toISOString()
+        }
+        */
+        let newFlight: Flight = 
+                Object.assign(
+                        {}, 
+                        oldFlight, 
+                        {date: newFlightDate.toISOString()});
+
+        let newFlights = [
+            newFlight,
+            ...oldFlights.slice(1)
+        ];
+
+        this.flights = newFlights;
+        this.flight$.next(newFlights);
     }
 
     find(from: string, to: string): void {
@@ -36,6 +72,7 @@ export class FlightService {
             .subscribe(
                 (flights: Flight[]) => {
                     this.flights = flights;
+                    this.flight$.next(flights);
                 },
                 (err) => {
                     console.error('Fehler beim Laden', err);

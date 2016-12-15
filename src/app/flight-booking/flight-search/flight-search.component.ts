@@ -24,8 +24,17 @@ export class FlightSearchComponent {
         return this.flightService.flights;
     }
 
+    get flights$() {
+        return this.flightService.flight$;
+    }
+
+
     search() {
         this.flightService.find(this.from, this.to);
+    }
+
+    delay() {
+        this.flightService.delay();
     }
 
     select(flight: Flight) {
