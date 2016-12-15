@@ -1,5 +1,6 @@
+import { SharedModule } from './shared/shared.module';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
-import { FlightBookingModule } from './flight-booking/flight-booking.module';
+// import { FlightBookingModule } from './flight-booking/flight-booking.module';
 import { PassengerEditComponent } from './flight-booking/passenger-edit/passenger-edit.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,7 +24,8 @@ import {FlightEditComponent} from "./flight-booking/flight-edit/flight-edit.comp
     FormsModule,  
     HttpModule,   
     AppRouterModule,
-    FlightBookingModule
+    SharedModule
+    //FlightBookingModule
   ],
   declarations: [
     AppComponent,

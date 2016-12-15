@@ -1,3 +1,5 @@
+import { CanDeactivateGuard } from './../shared/guards/can-deactivate.guard';
+import { AuthGuard } from './../shared/guards/auth.guard';
 import { FlightBookingComponent } from './flight-booking.component';
 import { PassengerEditComponent } from './passenger-edit/passenger-edit.component';
 import { FlightEditComponent } from './flight-edit/flight-edit.component';
@@ -9,7 +11,8 @@ import { Routes, RouterModule } from '@angular/router';
 const FLIGHT_BOOKING_MODULE: Routes = [
 
     {
-        path: 'flight-booking',
+        path: '',
+        canActivate: [AuthGuard],
         component: FlightBookingComponent,
         children: [
             {
@@ -22,7 +25,8 @@ const FLIGHT_BOOKING_MODULE: Routes = [
             },
             {
                 path: 'flight-edit/:id',
-                component: FlightEditComponent
+                component: FlightEditComponent,
+                canDeactivate: [CanDeactivateGuard]
             },
             {
                 path: 'passenger-edit/:id',
