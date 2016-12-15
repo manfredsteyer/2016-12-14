@@ -1,3 +1,4 @@
+import { FlightEventService } from './../../eventing/flight-event.service';
 import {Component} from "@angular/core";
 import {Flight} from "../../entities/flight";
 import {Http, URLSearchParams, Headers} from "@angular/http";
@@ -14,7 +15,9 @@ export class FlightSearchComponent {
     to: string;
     selectedFlight: Flight;
 
-    constructor(private flightService: FlightService) {
+    constructor(
+        private flightService: FlightService,
+        private flightEventService: FlightEventService) {
     }
 
     get flights(): Flight[] {
@@ -27,6 +30,7 @@ export class FlightSearchComponent {
 
     select(flight: Flight) {
         this.selectedFlight = flight;
+        this.flightEventService.flightSelected.next(flight);
     }
 
 }

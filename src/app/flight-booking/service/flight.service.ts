@@ -1,3 +1,4 @@
+import { OAuthService } from 'angular2-oauth2/oauth-service';
 import {Http, URLSearchParams, Headers} from "@angular/http";
 import {Injectable, Inject} from "@angular/core";
 import {Observable} from "rxjs";
@@ -12,6 +13,7 @@ export class FlightService {
 
     constructor(
         private http: Http,
+        private oauthService: OAuthService,
         @Inject(BASE_URL) private baseUrl: string) {
     }
 
@@ -25,6 +27,7 @@ export class FlightService {
 
         let headers = new Headers();
         headers.set('Accept', 'application/json');
+        // headers.set('Authorization', 'Bearer ' +  this.oauthService.getAccessToken())
 
         this
             .http
@@ -36,6 +39,7 @@ export class FlightService {
                 },
                 (err) => {
                     console.error('Fehler beim Laden', err);
+                    // Redirect auf login bei 401 oder 403
                 }
             )
     }

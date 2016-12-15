@@ -1,9 +1,8 @@
 "use strict";
+var custom_preloading_strategy_1 = require('./shared/preload/custom-preloading-strategy');
+var flight_history_component_1 = require('./flight-history/flight-history.component');
 var router_1 = require("@angular/router");
 var home_component_1 = require("./home/home.component");
-var flight_search_component_1 = require("./flight-booking/flight-search/flight-search.component");
-var passenger_search_component_1 = require("./flight-booking/passenger-search/passenger-search.component");
-var flight_edit_component_1 = require("./flight-booking/flight-edit/flight-edit.component");
 // /flight-search --> ../flight-edit
 // /flight-edit
 var APP_ROUTES = [
@@ -17,21 +16,23 @@ var APP_ROUTES = [
         component: home_component_1.HomeComponent
     },
     {
-        path: 'flight-search',
-        component: flight_search_component_1.FlightSearchComponent
+        path: 'flight-booking',
+        loadChildren: './flight-booking/flight-booking.module#FlightBookingModule',
+        data: {
+            preload: true
+        }
     },
     {
-        path: 'passenger-search',
-        component: passenger_search_component_1.PassengerSearchComponent
-    },
-    {
-        path: 'flight-edit/:id',
-        component: flight_edit_component_1.FlightEditComponent
+        path: 'history',
+        component: flight_history_component_1.FlightHistoryComponent,
+        outlet: 'aux'
     },
     {
         path: '**',
         redirectTo: 'home'
     }
 ];
-exports.AppRouterModule = router_1.RouterModule.forRoot(APP_ROUTES);
+exports.AppRouterModule = router_1.RouterModule.forRoot(APP_ROUTES, {
+    preloadingStrategy: custom_preloading_strategy_1.CustomPreloadingStrategy
+});
 //# sourceMappingURL=app.routes.js.map

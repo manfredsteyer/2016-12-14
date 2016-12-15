@@ -1,3 +1,4 @@
+import { FlightEventService } from './eventing/flight-event.service';
 import { SharedModule } from './shared/shared.module';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 // import { FlightBookingModule } from './flight-booking/flight-booking.module';
@@ -34,6 +35,7 @@ import {FlightEditComponent} from "./flight-booking/flight-edit/flight-edit.comp
   ],
   providers: [
     { provide: BASE_URL, useValue: "http://www.angular.at/api"},
+    FlightEventService
   ],
   bootstrap: [        
      AppComponent 

@@ -8,7 +8,22 @@ var FlightEditComponent = (function () {
         this.flightService = flightService;
         this.info = "FlightEdit";
         this.message = "";
+        this.warning = {
+            resolve: null,
+            showDialog: false
+        };
     }
+    FlightEditComponent.prototype.canDeactivate = function () {
+        var _this = this;
+        this.warning.showDialog = true;
+        return new Promise(function (resolve) {
+            _this.warning.resolve = resolve;
+        });
+    };
+    FlightEditComponent.prototype.decide = function (d) {
+        this.warning.showDialog = false;
+        this.warning.resolve(d);
+    };
     FlightEditComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.subscribe(function (p) {
