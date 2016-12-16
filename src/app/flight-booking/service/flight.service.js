@@ -2,6 +2,7 @@
 var oauth_service_1 = require('angular2-oauth2/oauth-service');
 var http_1 = require("@angular/http");
 var core_1 = require("@angular/core");
+var rxjs_1 = require("rxjs");
 var app_constants_1 = require('../../app.constants');
 var FlightService = (function () {
     function FlightService(http, oauthService, baseUrl) {
@@ -9,25 +10,53 @@ var FlightService = (function () {
         this.oauthService = oauthService;
         this.baseUrl = baseUrl;
         this.flights = [];
+        this.flight$ = new rxjs_1.BehaviorSubject([]);
     }
+    FlightService.prototype.delay = function () {
+        // Mutable "klassisch"
+        var ONE_MINUTE = 1000 * 60;
+        var oldFlights = this.flights;
+        var oldFlight = oldFlights[0];
+        var oldFlightDate = new Date(oldFlight.date);
+        var newFlightDate = new Date(oldFlightDate.getTime() + ONE_MINUTE * 15);
+        /*
+        let newFlight = {
+            id: oldFlight.id,
+            from: oldFlight.from,
+            to: oldFlight.to,
+            date: newFlightDate.toISOString()
+        }
+        */
+        var newFlight = Object.assign({}, oldFlight, { date: newFlightDate.toISOString() });
+        var newFlights = [
+            newFlight
+        ].concat(oldFlights.slice(1));
+        this.flights = newFlights;
+        this.flight$.next(newFlights);
+    };
     FlightService.prototype.find = function (from, to) {
         var _this = this;
-        var url = this.baseUrl + "/flight";
-        var search = new http_1.URLSearchParams();
-        search.set('from', from);
-        search.set('to', to);
-        var headers = new http_1.Headers();
-        headers.set('Accept', 'application/json');
-        // headers.set('Authorization', 'Bearer ' +  this.oauthService.getAccessToken())
-        this
-            .http
-            .get(url, { search: search, headers: headers })
-            .map(function (resp) { return resp.json(); })
-            .subscribe(function (flights) {
-            _this.flights = flights;
-        }, function (err) {
-            console.error('Fehler beim Laden', err);
-            // Redirect auf login bei 401 oder 403
+        return new Promise(function (resolve, reject) {
+            var url = _this.baseUrl + "/flight";
+            var search = new http_1.URLSearchParams();
+            search.set('from', from);
+            search.set('to', to);
+            var headers = new http_1.Headers();
+            headers.set('Accept', 'application/json');
+            // headers.set('Authorization', 'Bearer ' +  this.oauthService.getAccessToken())
+            _this
+                .http
+                .get(url, { search: search, headers: headers })
+                .map(function (resp) { return resp.json(); })
+                .subscribe(function (flights) {
+                _this.flights = flights;
+                _this.flight$.next(flights);
+                resolve(flights);
+            }, function (err) {
+                console.error('Fehler beim Laden', err);
+                reject(err);
+                // Redirect auf login bei 401 oder 403
+            });
         });
     };
     FlightService.prototype.findById = function (id) {

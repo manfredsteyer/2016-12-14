@@ -1,4 +1,5 @@
 "use strict";
+var flight_event_service_1 = require('./../eventing/flight-event.service');
 var oauth_service_1 = require('angular2-oauth2/oauth-service');
 var custom_preloading_strategy_1 = require('./preload/custom-preloading-strategy');
 var can_deactivate_guard_1 = require('./guards/can-deactivate.guard');
@@ -10,6 +11,18 @@ var common_1 = require('@angular/common');
 var SharedModule = (function () {
     function SharedModule() {
     }
+    SharedModule.forRoot = function () {
+        return {
+            ngModule: SharedModule,
+            providers: [
+                oauth_service_1.OAuthService,
+                auth_guard_1.AuthGuard,
+                can_deactivate_guard_1.CanDeactivateGuard,
+                custom_preloading_strategy_1.CustomPreloadingStrategy,
+                flight_event_service_1.FlightEventService
+            ]
+        };
+    };
     SharedModule = __decorate([
         core_1.NgModule({
             imports: [
@@ -19,12 +32,7 @@ var SharedModule = (function () {
             declarations: [
                 city_pipe_1.CityPipe
             ],
-            providers: [
-                oauth_service_1.OAuthService,
-                auth_guard_1.AuthGuard,
-                can_deactivate_guard_1.CanDeactivateGuard,
-                custom_preloading_strategy_1.CustomPreloadingStrategy
-            ],
+            providers: [],
             exports: [
                 city_pipe_1.CityPipe
             ]

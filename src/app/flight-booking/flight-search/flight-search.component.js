@@ -14,8 +14,21 @@ var FlightSearchComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(FlightSearchComponent.prototype, "flights$", {
+        get: function () {
+            return this.flightService.flight$;
+        },
+        enumerable: true,
+        configurable: true
+    });
     FlightSearchComponent.prototype.search = function () {
-        this.flightService.find(this.from, this.to);
+        if (!this.from || !this.to) {
+            return Promise.reject('args');
+        }
+        return this.flightService.find(this.from, this.to);
+    };
+    FlightSearchComponent.prototype.delay = function () {
+        this.flightService.delay();
     };
     FlightSearchComponent.prototype.select = function (flight) {
         this.selectedFlight = flight;

@@ -43,7 +43,6 @@ module.exports = function (options) {
       'polyfills': './src/polyfills.browser.ts',
       'vendor':    './src/vendor.browser.ts',
       'main':      './src/main.browser.ts'
-
     },
 
     resolve: {

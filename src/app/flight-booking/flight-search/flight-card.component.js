@@ -22,7 +22,8 @@ var FlightCardComponent = (function () {
     FlightCardComponent = __decorate([
         core_1.Component({
             selector: 'flight-card',
-            templateUrl: './flight-card.component.html'
+            templateUrl: './flight-card.component.html',
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [])
     ], FlightCardComponent);

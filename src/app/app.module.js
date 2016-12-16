@@ -1,5 +1,4 @@
 "use strict";
-var flight_event_service_1 = require('./eventing/flight-event.service');
 var shared_module_1 = require('./shared/shared.module');
 var flight_history_component_1 = require('./flight-history/flight-history.component');
 var core_1 = require('@angular/core');
@@ -20,7 +19,7 @@ var AppModule = (function () {
                 forms_1.FormsModule,
                 http_1.HttpModule,
                 app_routes_1.AppRouterModule,
-                shared_module_1.SharedModule
+                shared_module_1.SharedModule.forRoot()
             ],
             declarations: [
                 app_component_1.AppComponent,
@@ -29,7 +28,6 @@ var AppModule = (function () {
             ],
             providers: [
                 { provide: app_constants_1.BASE_URL, useValue: "http://www.angular.at/api" },
-                flight_event_service_1.FlightEventService
             ],
             bootstrap: [
                 app_component_1.AppComponent

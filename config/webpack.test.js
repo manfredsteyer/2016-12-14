@@ -107,6 +107,14 @@ module.exports = function (options) {
           exclude: [/\.e2e\.ts$/]
         },
 
+        {
+          test: /\.ts$/,
+          loaders: [
+            'angular2-template-loader',
+            'angular-router-loader'
+          ]
+        },
+
         /**
          * Json loader support for *.json files.
          *

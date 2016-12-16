@@ -13,9 +13,10 @@ export class AuthGuard implements CanActivate {
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot):  boolean {
         
-        //let ok = this.oauthService.hasValidAccessToken() && 
-        //             this.oauthService.hasValidIdToken();
-
+        /*
+        let ok = this.oauthService.hasValidAccessToken() && 
+                     this.oauthService.hasValidIdToken();
+        */
         return true;
 
     }

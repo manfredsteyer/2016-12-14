@@ -29,8 +29,13 @@ export class FlightSearchComponent {
     }
 
 
-    search() {
-        this.flightService.find(this.from, this.to);
+    search(): Promise<Flight[]> {
+
+        if (!this.from || !this.to) {
+            return Promise.reject('args');
+        }
+
+        return this.flightService.find(this.from, this.to);
     }
 
     delay() {

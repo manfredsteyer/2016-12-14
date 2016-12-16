@@ -25,7 +25,7 @@ import {FlightEditComponent} from "./flight-booking/flight-edit/flight-edit.comp
     FormsModule,  
     HttpModule,   
     AppRouterModule,
-    SharedModule
+    SharedModule.forRoot()
     //FlightBookingModule
   ],
   declarations: [
@@ -35,7 +35,6 @@ import {FlightEditComponent} from "./flight-booking/flight-edit/flight-edit.comp
   ],
   providers: [
     { provide: BASE_URL, useValue: "http://www.angular.at/api"},
-    FlightEventService
   ],
   bootstrap: [        
      AppComponent 

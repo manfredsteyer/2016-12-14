@@ -53,32 +53,38 @@ export class FlightService {
         this.flight$.next(newFlights);
     }
 
-    find(from: string, to: string): void {
+    find(from: string, to: string) {
 
-        let url = this.baseUrl + "/flight";
+        return new Promise((resolve, reject) => { 
+            
+            let url = this.baseUrl + "/flight";
 
-        let search = new URLSearchParams();
-        search.set('from', from);
-        search.set('to', to);
+            let search = new URLSearchParams();
+            search.set('from', from);
+            search.set('to', to);
 
-        let headers = new Headers();
-        headers.set('Accept', 'application/json');
-        // headers.set('Authorization', 'Bearer ' +  this.oauthService.getAccessToken())
+            let headers = new Headers();
+            headers.set('Accept', 'application/json');
+            headers.set('Authorization', 'Bearer ' +  this.oauthService.getAccessToken())
 
-        this
-            .http
-            .get(url, { search, headers })
-            .map(resp => resp.json())
-            .subscribe(
-                (flights: Flight[]) => {
-                    this.flights = flights;
-                    this.flight$.next(flights);
-                },
-                (err) => {
-                    console.error('Fehler beim Laden', err);
-                    // Redirect auf login bei 401 oder 403
-                }
-            )
+            this
+                .http
+                .get(url, { search, headers })
+                .map(resp => resp.json())
+                .subscribe(
+                    (flights: Flight[]) => {
+                        this.flights = flights;
+                        this.flight$.next(flights);
+                        resolve(flights);
+                    },
+                    (err) => {
+                        console.error('Fehler beim Laden', err);
+                        reject(err);
+                        // Redirect auf login bei 401 oder 403
+                    }
+                );
+
+            });
     }
 
 

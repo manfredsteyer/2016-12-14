@@ -6,9 +6,9 @@ var AuthGuard = (function () {
         this.oauthService = oauthService;
     }
     AuthGuard.prototype.canActivate = function (route, state) {
-        //let ok = this.oauthService.hasValidAccessToken() && 
-        //             this.oauthService.hasValidIdToken();
-        return true;
+        var ok = this.oauthService.hasValidAccessToken() &&
+            this.oauthService.hasValidIdToken();
+        return ok;
     };
     AuthGuard = __decorate([
         core_1.Injectable(), 
